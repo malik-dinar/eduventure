@@ -1,0 +1,36 @@
+const express = require("express");
+const {
+  userRegister,
+  userLogin,
+  currentUser,
+} = require("../Controllers/userController");
+
+const validateToken = require("../Middleware/validateTokenHandler");
+
+const { getCategory, getCourseList, getAllCourse } = require("../Controllers/courseCategory");
+
+const { getVideo, getVideos, getVideoSwitch } = require("../Controllers/videoController");
+
+const router = express.Router();
+
+router.post("/register", userRegister);
+
+router.post("/login", userLogin);
+
+router.get("/current", validateToken, currentUser);
+
+router.get("/category", getCategory);
+
+router.get("/course-list" , getCourseList);
+
+router.get("/video", getVideo);
+
+router.get("/videos" , getVideos );
+
+router.get("/video-switch", getVideoSwitch);
+
+router.get("/all-course", getAllCourse);
+
+router.post("/report" , report);
+
+module.exports = router;
