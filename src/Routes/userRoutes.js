@@ -10,6 +10,8 @@ const validateToken = require("../Middleware/validateTokenHandler");
 const { getCategory, getCourseList, getAllCourse } = require("../Controllers/courseCategory");
 
 const { getVideo, getVideos, getVideoSwitch } = require("../Controllers/videoController");
+const { report } = require("../Controllers/Reports");
+const { comment } = require("../Controllers/Comments");
 
 const router = express.Router();
 
@@ -31,6 +33,8 @@ router.get("/video-switch", getVideoSwitch);
 
 router.get("/all-course", getAllCourse);
 
-router.post("/report" , report);
+router.post("/report" , report );
+
+router.post("/comment" , comment );
 
 module.exports = router;

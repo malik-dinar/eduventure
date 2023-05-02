@@ -3,8 +3,6 @@ const Tutor = require("../Models/tutorSchema");
 const asyncHandler = require("express-async-handler");
 
 const searchStudents =asyncHandler(async (req, res) => {
-    console.log('hi');
-    console.log(req.params.key);
     let result = await User.find({
         "$or":[
             {
