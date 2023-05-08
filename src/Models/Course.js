@@ -31,7 +31,7 @@ const CourseSchema = mongoose.Schema(
         default:0
     },
     videos:{
-      type:Array
+      type:Array,
     }
   },
   {

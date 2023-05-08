@@ -7,10 +7,18 @@ const {
 
 const validateToken = require("../Middleware/validateTokenHandler");
 
-const { getCategory, getCourseList, getAllCourse } = require("../Controllers/courseCategory");
+const {
+  getCategory,
+  getCourseList,
+  getAllCourse,
+} = require("../Controllers/courseCategory");
 
-const { getVideo, getVideos, getVideoSwitch } = require("../Controllers/videoController");
-const { report } = require("../Controllers/Reports");
+const {
+  getVideo,
+  getVideos,
+  getVideoSwitch,
+} = require("../Controllers/videoController");
+const { report, getReport } = require("../Controllers/Reports");
 const { comment } = require("../Controllers/Comments");
 
 const router = express.Router();
@@ -23,18 +31,19 @@ router.get("/current", validateToken, currentUser);
 
 router.get("/category", getCategory);
 
-router.get("/course-list" , getCourseList);
+router.get("/course-list", getCourseList);
 
 router.get("/video", getVideo);
 
-router.get("/videos" , getVideos );
+router.get("/videos", getVideos);
 
 router.get("/video-switch", getVideoSwitch);
 
 router.get("/all-course", getAllCourse);
 
-router.post("/report" , report );
+router.post("/report", report);
+// router.get("/report", getReport);
 
-router.post("/comment" , comment );
+router.post("/comment", comment);
 
 module.exports = router;

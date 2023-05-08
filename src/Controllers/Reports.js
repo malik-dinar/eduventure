@@ -3,13 +3,13 @@ const asyncHandler = require("express-async-handler");
 
 const report = asyncHandler(async (req, res) => {
   try {
-    const { courseId, videoId, report } = req.body;
+    const { courseId, videoId, report, userId } = req.body;
     const data = await Reports.findOne({ videoId });
     if (data) {
       (async (videoId, newData) => {
         await Reports.findOneAndUpdate(
           { videoId },
-          { $push: { reports: newData } },
+          { $push: { reports: {data: newData , userId:userId} } },
           { new: true }
         );
       })(videoId, report);
@@ -17,17 +17,22 @@ const report = asyncHandler(async (req, res) => {
       const result = await Reports.create({
         courseId,
         videoId,
-        report: [],
+        userId,
+        reports: [{data: report , userId:userId}],
       });
-      await Reports.findOneAndUpdate(
-        { _id: result._id },
-        { $push: { reports: report } },
-        { new: true }
-      );
     }
   } catch (err) {
     console.log(err);
   }
 });
+
+// const getReport = asyncHandler(async () => {
+//   try {
+//     let result = await User.find({});
+//     res.send(result);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 module.exports = { report };

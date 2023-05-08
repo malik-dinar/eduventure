@@ -3,29 +3,23 @@ const asyncHandler = require("express-async-handler");
 
 const comment = asyncHandler(async (req, res) => {
   try {
-    const { courseId, videoId, comment } = req.body;
-    console.log('4');
+    const { courseId, videoId, comment ,userId } = req.body;
     const data = await Comments.findOne({ videoId });
-    console.log("1");
     if (data) {
       (async (videoId, newData) => {
         await Comments.findOneAndUpdate(
           { videoId },
-          { $push: { comments: newData } },
+          { $push: { comments:{data: newData , userId:userId} } } ,
           { new: true }
         );
       })(videoId, comment);
     } else {
-      console.log("2");
       const result = await Comments.create({
         courseId,
         videoId,
+        userId,
+        comments: [{data: comment , userId:userId}],
       });
-      await Comments.findOneAndUpdate(
-        { _id: result._id },
-        { $push: { comments: comment } },
-        { new: true }
-      );
     }
   } catch (err) {
     console.log(err);

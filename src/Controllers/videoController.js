@@ -17,9 +17,10 @@ const addVideo = async (req, res) => {
       : null;
 
     const videoId = uuid.v4();
+    const now = new Date();
     const videoAdded = await Course.updateOne(
       { _id: id },
-      { $push: { videos: { _id: videoId, title: title, url: videoUrl } } }
+      { $push: { videos: { _id: videoId, title: title, url: videoUrl , createdAt: now } } }
     );
     if (videoAdded) {
       res.status(201).json({ message: "course added successfully " });
@@ -35,27 +36,28 @@ const addVideo = async (req, res) => {
 const getVideo = async (req, res) => {
   try {
     const courseId = req.query.id;
-    //const videoId = req.query.video_id;
     const course = await Course.findOne({ _id: courseId });
     if (!course) {
       return res.status(404).json({ err: true, message: "Video Not found" });
     }
-
-    console.log(course.videos[0].url);
-    //const foundObject = course.videos.find((obj) => obj._id === videoId);
-    const s3ObjectUrl = parseUrl(course.videos[0].url);
-    const presigner = new S3RequestPresigner({
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      },
-      region: "eu-north-1",
-      sha256: Hash.bind(null, "sha256"),
-    });
-    const url = await presigner.presign(new HttpRequest(s3ObjectUrl));
-    return res
-      .status(200)
-      .json({ message: "video fetched succesfully", data: formatUrl(url) });
+    const videoId=course.videos[0]._id
+    if(course.videos[0]?.url!==undefined){
+      const s3ObjectUrl = parseUrl(course.videos[0].url);
+      const presigner = new S3RequestPresigner({
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        },
+        region: "eu-north-1",
+        sha256: Hash.bind(null, "sha256"),
+      });
+      const url = await presigner.presign(new HttpRequest(s3ObjectUrl));
+      return res
+        .status(200)
+        .json({ message: "video fetched succesfully", data: formatUrl(url), videoId : videoId });
+    }else{
+      res.json({ message :"unaivailable"})
+    }
   } catch (err) {
     console.log(err);
   }
@@ -83,7 +85,7 @@ const getVideoSwitch = async (req, res) => {
     const url = await presigner.presign(new HttpRequest(s3ObjectUrl));
     return res
       .status(200)
-      .json({ message: "video fetched succesfully", data: formatUrl(url) });
+      .json({ message: "video fetched succesfully", data: formatUrl(url), videoId : videoId  });
   } catch (err) {
     console.log(err);
   }
