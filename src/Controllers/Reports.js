@@ -1,15 +1,15 @@
 const Reports = require("../Models/Report");
 const asyncHandler = require("express-async-handler");
+const { getVideoDetails } = require("../services/report.service");
 
 const report = asyncHandler(async (req, res) => {
-  try {
     const { courseId, videoId, report, userId } = req.body;
     const data = await Reports.findOne({ videoId });
     if (data) {
       (async (videoId, newData) => {
         await Reports.findOneAndUpdate(
           { videoId },
-          { $push: { reports: {data: newData , userId:userId} } },
+          { $push: { reports: { data: newData, userId: userId } } },
           { new: true }
         );
       })(videoId, report);
@@ -18,21 +18,20 @@ const report = asyncHandler(async (req, res) => {
         courseId,
         videoId,
         userId,
-        reports: [{data: report , userId:userId}],
+        reports: [{ data: report, userId: userId }],
       });
     }
-  } catch (err) {
-    console.log(err);
-  }
 });
 
-// const getReport = asyncHandler(async () => {
-//   try {
-//     let result = await User.find({});
-//     res.send(result);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
+const getReport = asyncHandler(async (req,res) => {
+    const result = await Reports.find({$expr: {$gt: [{$size: "$reports"}, 0]}});
+    let response=[];
+    for(id of result){   
+      let data =await getVideoDetails(id.courseId,id.videoId,id.reports);
+      console.log(data);
+      response.push(data);
+    }
+    res.send(response);
+});
 
-module.exports = { report };
+module.exports = { report, getReport };

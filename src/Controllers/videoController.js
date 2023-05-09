@@ -40,7 +40,7 @@ const getVideo = async (req, res) => {
     if (!course) {
       return res.status(404).json({ err: true, message: "Video Not found" });
     }
-    const videoId=course.videos[0]._id
+    const videoId=course.videos[0]?._id
     if(course.videos[0]?.url!==undefined){
       const s3ObjectUrl = parseUrl(course.videos[0].url);
       const presigner = new S3RequestPresigner({

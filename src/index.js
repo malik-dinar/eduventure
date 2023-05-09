@@ -3,6 +3,7 @@ const connectDb = require("./Config/dbConnection");
 const errorHandler = require("./Middleware/errorHandler");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const compression = require('./Middleware/compression');
 require("dotenv").config();
 
 const app = express();
@@ -14,6 +15,7 @@ const tutorRoute = require("./Routes/tutorRoutes");
 const adminRoute = require("./Routes/adminRoutes");
 
 app.use(cors());
+app.use(compression)
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
