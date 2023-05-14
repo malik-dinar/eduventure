@@ -33,20 +33,20 @@ router.get("/category", getCategory);
 
 router.get("/course-list", getCourseList);
 
-router.get("/video", getVideo);
+router.get("/video", validateToken ,getVideo);
 
-router.get("/videos", getVideos);
+router.get("/videos", validateToken, getVideos);
 
-router.get("/video-switch", getVideoSwitch);
+router.get("/video-switch", validateToken, getVideoSwitch);
 
-router.get("/all-course", getAllCourse);
+router.get("/all-course", validateToken, getAllCourse);
 
-router.post("/report", report);
+router.post("/report", validateToken, report);
 
-router.get("/report", getReport);
+router.get("/report", validateToken, getReport);
 
-router.post("/comment", comment);
+router.post("/comment", validateToken, comment);
 
-router.get("/comment", getComment);
+router.get("/comment", validateToken, getComment);
 
 module.exports = router;
