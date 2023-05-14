@@ -13,6 +13,7 @@ const port = process.env.PORT || 3001;
 const userRoute = require("./Routes/userRoutes");
 const tutorRoute = require("./Routes/tutorRoutes");
 const adminRoute = require("./Routes/adminRoutes");
+const chatRoute = require("./Routes/chatRoute");
 
 app.use(cors());
 app.use(compression)
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use("/api/users", userRoute);
 app.use("/api/tutors", tutorRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/chat", chatRoute);
 
 app.use(errorHandler);
 
