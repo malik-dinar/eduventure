@@ -3,6 +3,7 @@ const {
   userRegister,
   userLogin,
   currentUser,
+  getUser,
 } = require("../Controllers/userController");
 
 const validateToken = require("../Middleware/validateTokenHandler");
@@ -20,6 +21,7 @@ const {
 } = require("../Controllers/videoController");
 const { report, getReport } = require("../Controllers/Reports");
 const { comment, getComment } = require("../Controllers/Comments");
+const { trendingCourse } = require("../Controllers/courseController");
 
 const router = express.Router();
 
@@ -29,24 +31,28 @@ router.post("/login", userLogin);
 
 router.get("/current", validateToken, currentUser);
 
+router.get('/', getUser)
+
 router.get("/category", getCategory);
 
 router.get("/course-list", getCourseList);
 
-router.get("/video", validateToken ,getVideo);
+router.get("/video" ,getVideo);
 
-router.get("/videos", validateToken, getVideos);
+router.get("/videos", getVideos);
 
-router.get("/video-switch", validateToken, getVideoSwitch);
+router.get("/video-switch", getVideoSwitch);
 
-router.get("/all-course", validateToken, getAllCourse);
+router.get("/all-course", getAllCourse);
 
-router.post("/report", validateToken, report);
+router.post("/report", report);
 
-router.get("/report", validateToken, getReport);
+router.get("/report", getReport);
 
-router.post("/comment", validateToken, comment);
+router.post("/comment", comment);
 
-router.get("/comment", validateToken, getComment);
+router.get("/comment", getComment);
+
+router.get("/trending", trendingCourse);
 
 module.exports = router;

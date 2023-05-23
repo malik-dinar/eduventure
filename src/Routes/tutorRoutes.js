@@ -1,5 +1,5 @@
 const express = require("express");
-const { tutorRegister, tutorLogin } = require("../Controllers/tutorController");
+const { tutorRegister, tutorLogin, getTutor } = require("../Controllers/tutorController");
 const {
   AddCourse,
   getCategory,
@@ -34,10 +34,13 @@ const upload = multer({
 router.post("/register", tutorRegister);
 router.post("/login", tutorLogin);
 
-router.post("/course", validateToken , upload.single("image"), AddCourse);
+
+router.get('/', getTutor)
+
+router.post("/course" , upload.single("image"), AddCourse);
 router.get("/category", getCategory);
 
-router.get("/course/:id",validateToken, getCourse);
+router.get("/course/:id", getCourse);
 
 router.post(
   "/video",
@@ -53,8 +56,8 @@ router.post(
   addVideo
 );
 
-router.get("/videos", validateToken, getVideos);
+router.get("/videos", getVideos);
 
-router.delete("/video",validateToken, delteVideo);
+router.delete("/video", delteVideo);
 
 module.exports = router;

@@ -4,8 +4,9 @@ const Message = require("../Models/Message");
 const asyncHandler = require("express-async-handler");
 
 const newConversation = asyncHandler(async (req, res) => {
+  const { senderId , receiverId } = req.body;; 
   const newConversation = new Conversation({
-    members: [req.body.senderId, req.body.receiverId],
+    members: [ senderId, receiverId],
   });
 
   const savedConversation = await newConversation.save();

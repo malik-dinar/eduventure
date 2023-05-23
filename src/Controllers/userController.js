@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const User = require('../Models/userSchema');
 const jwt = require("jsonwebtoken");
-const { use } = require("../Routes/userRoutes");
 
 const userRegister = asyncHandler(async (req, res) => {
     const { username, email, password} = req.body;
@@ -50,7 +49,7 @@ const userLogin = asyncHandler(async (req,res)=>{
             },
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "15m"}
+          { expiresIn: "1h"}
         );
         res.status(200).json({ accessToken })
     }else{
@@ -66,4 +65,12 @@ const currentUser = asyncHandler(async (req,res)=>{
     res.send({message:"current user info "})
 });
 
-module.exports = { userRegister, userLogin , currentUser }   
+const   getUser = asyncHandler(async(req,res)=>{
+    console.log('idddd');
+    const userId = req.query.userId;
+    console.log(userId);
+    const user =await User.findById(userId);
+    res.status(200).json(user)
+})
+
+module.exports = { userRegister, userLogin , currentUser , getUser}   

@@ -2,7 +2,7 @@ const express = require('express');
 const { userBlock, userUnBlock, tutorBlock, tutorUnBlock } = require('../Controllers/activeController');
 const { adminLogin, getUSers, getTutors } = require('../Controllers/adminController');
 const { addCategory } = require('../Controllers/courseCategory');
-const { searchStudents } = require('../Controllers/searchController');
+const { searchStudents, searchTutors } = require('../Controllers/searchController');
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 
@@ -38,7 +38,7 @@ router.put('/un-block/tutor/:id', tutorUnBlock);
 
 // search 
 router.get('/search/:key', searchStudents );
-// router.get('/search/:key', searchTutor )
+router.get('/searchTutor/:key', searchTutors )
 
 //add course category
 router.post('/category', upload.single('coursePath') , addCategory );

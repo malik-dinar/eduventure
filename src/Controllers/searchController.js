@@ -16,4 +16,18 @@ const searchStudents =asyncHandler(async (req, res) => {
     res.send(result)
 })
 
-module.exports = { searchStudents }
+const searchTutors =asyncHandler(async (req, res) => {
+    let result = await Tutor.find({
+        "$or":[
+            {
+                username:{$regex:req.params.key}
+            },
+            {
+                email:{$regex:req.params.key}       
+            }
+        ]
+    });
+    res.send(result)
+})
+
+module.exports = { searchStudents ,searchTutors}

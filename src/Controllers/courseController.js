@@ -1,7 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const Course = require("../Models/Course");
+const Reports = require("../Models/Report");
 const cloudinary = require("cloudinary").v2;
 const Category = require("../Models/CourseCategory");
+const { getTrendingVideos } = require("../services/course.service");
 
 const AddCourse = asyncHandler(async (req, res) => {
   try {
@@ -62,15 +64,29 @@ const getCategory = async (req, res) => {
 };
 
 const getCourse = asyncHandler(async (req, res) => {
-  const { id } = req.params
-  try {
+    const { id } = req.params
     const course = await Course.find({tutorId : id});
     res.status(200).json(course);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "server Error" });
-  }
 });
 
+const trendingCourse=async(req,res)=>{
+  const result =await Reports.aggregate([
+    {
+      $project: {
+        courseId:1,
+        comments: { $size: "$comments" }
+      }
+    },
+    {
+      $sort: { comments: -1 }
+    },
+    {
+      $limit: 3
+    }
+  ]);
+  getTrendingVideos(result)
+  res.send(result);
+}
 
-module.exports = { AddCourse, getCategory ,getCourse };
+
+module.exports = { AddCourse, getCategory ,getCourse ,trendingCourse};
