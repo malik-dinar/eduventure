@@ -10,6 +10,7 @@ require("dotenv").config();
 const connectDb = require("./Config/dbConnection");
 const errorHandler = require("./Middleware/errorHandler");
 const compression = require("./Middleware/compression");
+const authLimiter = require("./Middleware/rate.limiter");
 const { initializeSocket } = require("./socket/socket");
 
 const userRoute = require("./Routes/userRoutes");
@@ -29,6 +30,11 @@ app.use(bodyParser.json());
 const server = http.createServer(app);
 
 initializeSocket(server);
+
+if (process.env.NODE_ENV === "production") {
+  app.use("/api/users/login", authLimiter);
+  app.use("/api/tutors/login", authLimiter);
+}
 
 app.use("/api/users", userRoute);
 app.use("/api/tutors", tutorRoute);

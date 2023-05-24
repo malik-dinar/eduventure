@@ -17,7 +17,6 @@ const report = asyncHandler(async (req, res) => {
       const result = await Reports.create({
         courseId,
         videoId,
-        userId,
         reports: [{ data: report, userId: userId }],
       });
     }
