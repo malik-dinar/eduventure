@@ -1,4 +1,4 @@
-const Comments = require("../Models/Report");
+const Comments = require("../models/report");
 const asyncHandler = require("express-async-handler");
 const moment = require('moment');
 

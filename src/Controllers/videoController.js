@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Course = require("../Models/Course");
+const Course = require("../models/course");
 const { parseUrl } = require("@aws-sdk/url-parser");
 const { HttpRequest } = require("@aws-sdk/protocol-http");
 const { S3RequestPresigner } = require("@aws-sdk/s3-request-presigner");

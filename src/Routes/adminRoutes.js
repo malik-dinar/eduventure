@@ -1,8 +1,8 @@
 const express = require('express');
-const { userBlock, userUnBlock, tutorBlock, tutorUnBlock } = require('../Controllers/activeController');
-const { adminLogin, getUSers, getTutors } = require('../Controllers/adminController');
-const { addCategory } = require('../Controllers/courseCategory');
-const { searchStudents, searchTutors } = require('../Controllers/searchController');
+const { userBlock, userUnBlock, tutorBlock, tutorUnBlock } = require('../controllers/activeController');
+const { adminLogin, getUSers, getTutors } = require('../controllers/adminController');
+const { addCategory } = require('../controllers/courseCategory');
+const { searchStudents, searchTutors } = require('../controllers/searchController');
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 

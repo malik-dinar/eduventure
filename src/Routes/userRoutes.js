@@ -4,24 +4,24 @@ const {
   userLogin,
   currentUser,
   getUser,
-} = require("../Controllers/userController");
+} = require("../controllers/userController");
 
-const validateToken = require("../Middleware/validateTokenHandler");
+const validateToken = require("../middleware/validateTokenHandler");
 
 const {
   getCategory,
   getCourseList,
   getAllCourse,
-} = require("../Controllers/courseCategory");
+} = require("../controllers/courseCategory");
 
 const {
   getVideo,
   getVideos,
   getVideoSwitch,
-} = require("../Controllers/videoController");
-const { report, getReport } = require("../Controllers/Reports");
-const { comment, getComment } = require("../Controllers/Comments");
-const { trendingCourse } = require("../Controllers/courseController");
+} = require("../controllers/videoController");
+const { report, getReport } = require("../controllers/reports");
+const { comment, getComment } = require("../controllers/comments");
+const { trendingCourse } = require("../controllers/courseController");
 
 const router = express.Router();
 

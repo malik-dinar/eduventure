@@ -1,5 +1,5 @@
-const User = require("../Models/userSchema");
-const Tutor = require("../Models/tutorSchema");
+const User = require("../models/userSchema");
+const Tutor = require("../models/tutorSchema");
 const asyncHandler = require("express-async-handler");
 
 const searchStudents =asyncHandler(async (req, res) => {

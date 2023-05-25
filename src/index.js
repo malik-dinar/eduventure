@@ -8,8 +8,8 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const connectDb = require("./Config/dbConnection");
-const errorHandler = require("./Middleware/errorHandler");
-const compression = require("./Middleware/compression");
+const errorHandler = require("./middleware/errorHandler");
+const compression = require("./middleware/compression");
 const authLimiter = require("./Middleware/rate.limiter");
 const { initializeSocket } = require("./socket/socket");
 

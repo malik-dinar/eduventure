@@ -1,11 +1,11 @@
 const express = require("express");
-const validateToken = require("../Middleware/validateTokenHandler");
+const validateToken = require("../middleware/validateTokenHandler");
 const {
   newConversation,
   getConversation,
   newMessage,
   getMessages,
-} = require("../Controllers/chatController");
+} = require("../controllers/chatController");
 
 const router = express.Router();
 

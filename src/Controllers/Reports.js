@@ -1,4 +1,4 @@
-const Reports = require("../Models/Report");
+const Reports = require("../models/report");
 const asyncHandler = require("express-async-handler");
 const { getVideoDetails } = require("../services/report.service");
 

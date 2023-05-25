@@ -1,18 +1,18 @@
 const express = require("express");
-const { tutorRegister, tutorLogin, getTutor } = require("../Controllers/tutorController");
+const { tutorRegister, tutorLogin, getTutor } = require("../controllers/tutorController");
 const {
   AddCourse,
   getCategory,
   getCourse,
-} = require("../Controllers/courseController");
+} = require("../controllers/courseController");
 const multer = require("multer");
 const {
   addVideo,
   getVideos,
   delteVideo,
-} = require("../Controllers/videoController");
+} = require("../controllers/videoController");
 const { uploadVideo } = require("../Utils/multer");
-const validateToken = require("../Middleware/validateTokenHandler");
+const validateToken = require("../middleware/validateTokenHandler");
 
 const cloudinary = require("cloudinary").v2;
 

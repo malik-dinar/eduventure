@@ -1,8 +1,8 @@
 const asyncHandler = require("express-async-handler");
-const Course = require("../Models/Course");
-const Reports = require("../Models/Report");
+const Course = require("../models/course");
+const Reports = require("../models/report");
 const cloudinary = require("cloudinary").v2;
-const Category = require("../Models/CourseCategory");
+const Category = require("../models/courseCategory");
 const { getTrendingVideos } = require("../services/course.service");
 
 const AddCourse = asyncHandler(async (req, res) => {
