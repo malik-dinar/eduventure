@@ -54,7 +54,7 @@ const getVideo = async (req, res) => {
       const url = await presigner.presign(new HttpRequest(s3ObjectUrl));
       return res
         .status(200)
-        .json({ message: "video fetched succesfully", data: formatUrl(url), videoId : videoId });
+        .json({ message: "video fetched succesfully", data: formatUrl(url), videoId  });
     }else{
       res.json({ message :"unaivailable"})
     }
@@ -98,7 +98,7 @@ const getVideos = asyncHandler(async (req, res) => {
     if (!courses) {
       return res.status(404).json({ err: true, message: "Course Not found" });
     } else {
-      return res.send(courses);
+      return res.json(courses);
     }
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -109,13 +109,10 @@ const delteVideo = asyncHandler(async (req,res) => {
   try {
     const courseId = req.query.courseId;
     const videoId = req.query.videoId;
-    console.log(courseId);
-    console.log(videoId);
     let result =await Course.updateOne(
       { _id: courseId },
       { $pull: { videos: { _id: videoId } } }
     )
-    console.log(result);
     if (result.modifiedCount!=0) {
       res.status(200).json({ message: "Video deleted successfully" });
     } else {

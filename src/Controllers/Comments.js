@@ -19,7 +19,7 @@ const comment = asyncHandler(async (req, res) => {
           },
           { new: true }
         );
-        res.send({message:"comment added successfully"})
+        res.json({message:"comment added successfully"})
       })(videoId, comment);
     } else {
       const result = await Comments.create({
@@ -28,7 +28,7 @@ const comment = asyncHandler(async (req, res) => {
         userId,
         comments: [{ data: comment, userName:userName ,userId: userId, date: date }],
       });
-      res.send({message:"comment added successfully"})
+      res.json({message:"comment added successfully"})
     }
   } catch (err) {
     console.log(err);
@@ -39,7 +39,7 @@ const getComment = asyncHandler(async (req, res) => {
   const courseId = req.query.courseId;
   const videoId = req.query.videoId;
   const result = await Comments.find({courseId:courseId , videoId:videoId});
-  res.send(result)
+  res.json(result)
 });
 
 module.exports = { comment, getComment };

@@ -62,15 +62,19 @@ const userLogin = asyncHandler(async (req,res)=>{
 
 const currentUser = asyncHandler(async (req,res)=>{
     res.json(req.user)
-    res.send({message:"current user info "})
+    res.json({message:"current user info "})
 });
 
-const   getUser = asyncHandler(async(req,res)=>{
-    console.log('idddd');
+const getUser = asyncHandler(async(req,res)=>{
     const userId = req.query.userId;
     console.log(userId);
     const user =await User.findById(userId);
     res.status(200).json(user)
 })
 
-module.exports = { userRegister, userLogin , currentUser , getUser}   
+const getUserCount = asyncHandler(async(req,res)=>{
+    let result= await User.count();
+    res.status(200).json(result)
+})
+
+module.exports = { userRegister, userLogin , currentUser , getUser ,getUserCount}   

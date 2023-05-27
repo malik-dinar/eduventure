@@ -30,7 +30,7 @@ const getReport = asyncHandler(async (req,res) => {
       console.log(data);
       response.push(data);
     }
-    res.send(response);
+    res.json(response);
 });
 
 module.exports = { report, getReport };

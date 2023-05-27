@@ -61,7 +61,6 @@ const tutorLogin = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("email or password not valid");
   }
-
   res.json({ message: "login succesfully" });
 });
 
@@ -71,4 +70,9 @@ const getTutor = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-module.exports = { tutorRegister, tutorLogin, getTutor };
+const getTutorCount = asyncHandler(async(req,res)=>{
+  let result= await Tutor.count();
+  res.status(200).json(result)
+})
+
+module.exports = { tutorRegister, tutorLogin, getTutor ,getTutorCount};

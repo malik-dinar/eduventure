@@ -4,6 +4,7 @@ const {
   userLogin,
   currentUser,
   getUser,
+  getUserCount,
 } = require("../controllers/userController");
 
 const validateToken = require("../middleware/validateTokenHandler");
@@ -32,6 +33,8 @@ router.post("/login", userLogin);
 router.get("/current", validateToken, currentUser);
 
 router.get('/', getUser)
+
+router.get('/count' , getUserCount )
 
 router.get("/category", getCategory);
 

@@ -13,7 +13,7 @@ const searchStudents =asyncHandler(async (req, res) => {
             }
         ]
     });
-    res.send(result)
+    res.json(result)
 })
 
 const searchTutors =asyncHandler(async (req, res) => {
@@ -27,7 +27,7 @@ const searchTutors =asyncHandler(async (req, res) => {
             }
         ]
     });
-    res.send(result)
+    res.json(result)
 })
 
 module.exports = { searchStudents ,searchTutors}

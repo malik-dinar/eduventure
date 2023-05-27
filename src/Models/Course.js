@@ -4,14 +4,12 @@ const CourseSchema = mongoose.Schema(
   {
     courseName: {
       type: String,
-      required: [true, "please add the category name"],
     },
     tutorId:{
         type: String,
     },
     description: {
       type: String,
-      required: [true, "please add the category description"],
     },
     path:{
         type: String

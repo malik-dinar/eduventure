@@ -93,7 +93,7 @@ const trendingCourse = async (req, res) => {
       response.push(add);
     })
   );
-  res.send(response);
+  res.json(response);
 };
 
 module.exports = { AddCourse, getCategory, getCourse, trendingCourse };

@@ -39,8 +39,6 @@ const addCategory = asyncHandler(async (req, res) => {
       path: result.secure_url,
     });
 
-    console.log(`course created ${courseCategory}`);
-
     if (courseCategory) {
       res.status(201).json({ message: "course category added successfully " });
     } else {
@@ -54,22 +52,17 @@ const addCategory = asyncHandler(async (req, res) => {
 
 const getCategory = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
-  try {
-    const CourseCategory = await Category.find()
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
+  const CourseCategory = await Category.find()
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
 
-    const count = await Category.countDocuments();
-    res.status(200).json({
-      CourseCategory,
-      totalPages: Math.ceil(count / limit),
-      currentPage: page,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "server Error" });
-  }
+  const count = await Category.countDocuments();
+  res.status(200).json({
+    CourseCategory,
+    totalPages: Math.ceil(count / limit),
+    currentPage: page,
+  });
 });
 
 const getCourseList = async (req, res) => {
@@ -79,7 +72,7 @@ const getCourseList = async (req, res) => {
     if (!course) {
       return res.status(404).json({ err: true, message: "No Course Found" });
     }
-    res.send(course);
+    res.json(course);
   } catch (err) {
     console.log(err);
   }
@@ -91,10 +84,10 @@ const getAllCourse = async (req, res) => {
     if (!course) {
       return res.status(404).json({ err: true, message: "No Course Found" });
     }
-    res.send(course);
+    res.json(course);
   } catch (err) {
     console.log(err);
   }
 };
 
-module.exports = { addCategory, getCategory, getCourseList ,getAllCourse};
+module.exports = { addCategory, getCategory, getCourseList, getAllCourse };
