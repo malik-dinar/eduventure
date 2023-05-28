@@ -7,21 +7,21 @@ const {
   getUserCount,
 } = require("../controllers/userController");
 
-const validateToken = require("../middleware/validateTokenHandler");
+const validateToken = require("../middleware/validateToken");
 
 const {
   getCategory,
   getCourseList,
   getAllCourse,
-} = require("../controllers/courseCategory");
+} = require("../controllers/courseCategoryController");
 
 const {
   getVideo,
   getVideos,
   getVideoSwitch,
 } = require("../controllers/videoController");
-const { report, getReport } = require("../controllers/reports");
-const { comment, getComment } = require("../controllers/comments");
+const { report, getReport } = require("../controllers/reportsController");
+const { comment, getComment } = require("../controllers/commentsController");
 const { trendingCourse } = require("../controllers/courseController");
 
 const router = express.Router();
@@ -32,15 +32,15 @@ router.post("/login", userLogin);
 
 router.get("/current", validateToken, currentUser);
 
-router.get('/', getUser)
+router.get("/", getUser);
 
-router.get('/count' , getUserCount )
+router.get("/count", getUserCount);
 
 router.get("/category", getCategory);
 
 router.get("/course-list", getCourseList);
 
-router.get("/video" ,getVideo);
+router.get("/video", getVideo);
 
 router.get("/videos", getVideos);
 

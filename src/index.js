@@ -16,7 +16,7 @@ const { initializeSocket } = require("./socket/socket");
 const userRoute = require("./Routes/userRoutes");
 const tutorRoute = require("./Routes/tutorRoutes");
 const adminRoute = require("./Routes/adminRoutes");
-const chatRoute = require("./Routes/chatRoute");
+const chatRoute = require("./Routes/chatRoutes");
 
 connectDb();
 

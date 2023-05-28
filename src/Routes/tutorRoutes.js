@@ -17,7 +17,7 @@ const {
   delteVideo,
 } = require("../controllers/videoController");
 const { uploadVideo } = require("../Utils/multer");
-const validateToken = require("../middleware/validateTokenHandler");
+const validateToken = require("../middleware/validateToken");
 
 const cloudinary = require("cloudinary").v2;
 

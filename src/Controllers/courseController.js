@@ -6,17 +6,15 @@ const Category = require("../models/courseCategory");
 const { getTrendingVideos } = require("../services/course.service");
 
 const AddCourse = asyncHandler(async (req, res) => {
-  try {
-    const { courseName, description, tutorId, category, additionalInfo } =
-      req.body;
+    const { courseName, description, tutorId, category, additionalInfo } = req.body;
     if (!courseName || !description || !tutorId || !category) {
-      res.status(400);
+      res.json({message : "All fields are mandatory!..."})
       throw new Error("All fields are mandatory!... ");
     }
 
     const courseAvailable = await Course.findOne({ courseName });
     if (courseAvailable) {
-      res.status(400);
+      res.json({message : "Course name Already exists"})
       throw new Error("Course name Already exists");
     }
 
@@ -49,9 +47,6 @@ const AddCourse = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error("User data is not valid");
     }
-  } catch (err) {
-    console.log(err);
-  }
 });
 
 const getCategory = async (req, res) => {

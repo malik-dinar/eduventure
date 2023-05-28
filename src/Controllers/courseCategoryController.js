@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Course = require("../models/course");
 const cloudinary = require("cloudinary").v2;
-const User = require("../models/userSchema");
+const User = require("../models/user");
 const Category = require("../models/courseCategory");
 
 const addCategory = asyncHandler(async (req, res) => {

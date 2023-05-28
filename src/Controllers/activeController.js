@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userSchema");
-const Tutor = require("../models/tutorSchema");
+const User = require("../models/user");
+const Tutor = require("../models/tutor");
 
 const userBlock = asyncHandler(async (req, res) => {
   try {
