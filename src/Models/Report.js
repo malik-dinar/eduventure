@@ -13,6 +13,9 @@ const ReportComments = mongoose.Schema(
     },
     comments:{
         type:Array
+    },
+    likes:{
+      type:Array
     }
   },
   {

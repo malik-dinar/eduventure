@@ -23,6 +23,7 @@ const {
 const { report, getReport } = require("../controllers/reportsController");
 const { comment, getComment } = require("../controllers/commentsController");
 const { trendingCourse } = require("../controllers/courseController");
+const { getTotalLikesForVideo, toggleLikeStatus } = require("../controllers/likeController");
 
 const router = express.Router();
 
@@ -56,6 +57,10 @@ router.post("/comment", comment);
 
 router.get("/comment", getComment);
 
-router.get("/trending", trendingCourse);
+router.get("/trending", trendingCourse);  
+
+router.get("/like", toggleLikeStatus);
+
+router.get("/total-likes", getTotalLikesForVideo);
 
 module.exports = router;
