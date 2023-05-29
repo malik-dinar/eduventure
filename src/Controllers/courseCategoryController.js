@@ -80,7 +80,7 @@ const getCourseList = async (req, res) => {
 
 const getAllCourse = async (req, res) => {
   try {
-    const course = await Course.find();
+    const course = await Course.find({isDeleted: {$ne:true}});
     if (!course) {
       return res.status(404).json({ err: true, message: "No Course Found" });
     }

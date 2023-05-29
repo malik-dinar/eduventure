@@ -6,47 +6,48 @@ const Category = require("../models/courseCategory");
 const { getTrendingVideos } = require("../services/course.service");
 
 const AddCourse = asyncHandler(async (req, res) => {
-    const { courseName, description, tutorId, category, additionalInfo } = req.body;
-    if (!courseName || !description || !tutorId || !category) {
-      res.json({message : "All fields are mandatory!..."})
-      throw new Error("All fields are mandatory!... ");
+  const { courseName, description, tutorId, category, additionalInfo } =
+    req.body;
+  if (!courseName || !description || !tutorId || !category) {
+    res.json({ message: "All fields are mandatory!..." });
+    throw new Error("All fields are mandatory!... ");
+  }
+
+  const courseAvailable = await Course.findOne({ courseName });
+  if (courseAvailable) {
+    res.json({ message: "Course name Already exists" });
+    throw new Error("Course name Already exists");
+  }
+
+  const base64String = req.file.buffer.toString("base64");
+  const img = await cloudinary.uploader.upload(
+    `data:${req.file.mimetype};base64,${base64String}`,
+    {
+      public_id: courseName,
+      resource_type: "image",
+      folder: "Thumbnails",
+      context: {
+        courseName: courseName,
+      },
+      tags: courseName,
     }
+  );
 
-    const courseAvailable = await Course.findOne({ courseName });
-    if (courseAvailable) {
-      res.json({message : "Course name Already exists"})
-      throw new Error("Course name Already exists");
-    }
+  const course = await Course.create({
+    tutorId: tutorId,
+    courseName: courseName,
+    description: description,
+    additionalInfo: additionalInfo,
+    category: category,
+    path: img.secure_url,
+  });
 
-    const base64String = req.file.buffer.toString("base64");
-    const img = await cloudinary.uploader.upload(
-      `data:${req.file.mimetype};base64,${base64String}`,
-      {
-        public_id: courseName,
-        resource_type: "image",
-        folder: "Thumbnails",
-        context: {
-          courseName: courseName,
-        },
-        tags: courseName,
-      }
-    );
-
-    const course = await Course.create({
-      tutorId: tutorId,
-      courseName: courseName,
-      description: description,
-      additionalInfo: additionalInfo,
-      category: category,
-      path: img.secure_url,
-    });
-
-    if (course) {
-      res.status(201).json({ message: "course added successfully " });
-    } else {
-      res.status(400);
-      throw new Error("User data is not valid");
-    }
+  if (course) {
+    res.status(201).json({ message: "course added successfully " });
+  } else {
+    res.status(400);
+    throw new Error("User data is not valid");
+  }
 });
 
 const getCategory = async (req, res) => {
@@ -91,4 +92,20 @@ const trendingCourse = async (req, res) => {
   res.json(response);
 };
 
-module.exports = { AddCourse, getCategory, getCourse, trendingCourse };
+const deletCourse = async (req, res) => {
+  const courseId = req.query.courseId;
+  await Course.findByIdAndUpdate(
+    courseId,
+    { $set: { isDeleted: true } },
+    { new: true }
+  );
+  res.status(200).json({ message: "course deleted successfully" });
+};
+
+module.exports = {
+  AddCourse,
+  getCategory,
+  getCourse,
+  trendingCourse,
+  deletCourse,
+};

@@ -30,6 +30,10 @@ const CourseSchema = mongoose.Schema(
     },
     videos:{
       type:Array,
+    },
+    isDeleted:{
+      type: Boolean,
+      default: false
     }
   },
   {

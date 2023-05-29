@@ -49,15 +49,36 @@ const toggleLikeStatus = asyncHandler(async (req, res) => {
   }
 });
 
-const getTotalLikesForVideo=asyncHandler(async(req,res)=>{
-    const videoId=req.query.videoId;
-    const courseId=req.query.courseId;
-    const result = await Like.aggregate([
-        {$match: {courseId:courseId, videoId:videoId}},
-        {$unwind:"$likes"},
-        { $match: { "likes.like": true } }
-    ])  
-    res.json({message:"The number of likes for that video",like:result.length});
-})
+const getTotalLikesForVideo = asyncHandler(async (req, res) => {
+  const videoId = req.query.videoId;
+  const courseId = req.query.courseId;
+  const result = await Like.aggregate([
+    { $match: { courseId: courseId, videoId: videoId } },
+    { $unwind: "$likes" },
+    { $match: { "likes.like": true } },
+  ]);
+  res.json({
+    message: "The number of likes for that video",
+    like: result.length,
+  });
+});
 
-module.exports = { toggleLikeStatus ,getTotalLikesForVideo};
+const likeStatus = asyncHandler(async (req, res) => {
+  const videoId = req.query.videoId;
+  const userId = req.query.userId;
+
+  const videoAvailable = await Like.findOne({ videoId });
+
+  if (videoAvailable) {
+    const result = videoAvailable.likes.find((r) => r.userId === userId);
+    if (!result) {
+      res.json({ message: "like status", like: false });
+    } else {
+      res.json({ message: "like status", like: result.like });
+    }
+  } else {
+    res.json({ message: "like status", like: false });
+  }
+});
+
+module.exports = { toggleLikeStatus, getTotalLikesForVideo, likeStatus };
