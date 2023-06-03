@@ -11,33 +11,30 @@ const adminLogin = asyncHandler(async (req, res) => {
     throw new Error("All fields are mandatory");
   }
   const user = await User.findOne({ email });
-  if (user.admin) {
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const accessToken = jwt.sign(
-        {
-          user: {
-            username: user.username,
-            email: user.email,
-            id: user.id,
-          },
+  if (user.admin && (await bcrypt.compare(password, user.password))) {
+    const accessToken = jwt.sign(
+      {
+        user: {
+          username: user.username,
+          email: user.email,
+          id: user.id,
         },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "15m" }
-      );
-      res.status(200).json({ accessToken });
-    }
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "15m" }
+    );
+    res.status(200).json({ accessToken });
   } else {
     res.status(401);
     throw new Error("email or password not valid");
   }
-  res.json({ message: "login succesfully" });
 });
 
 const getUSers = asyncHandler(async (req, res) => {
   const { page = 1, limit = 6 } = req.query;
   try {
     const users = await User.find({ admin: { $ne: true } })
-    .limit(limit)
+      .limit(limit)
       .skip((page - 1) * limit)
       .exec();
 
@@ -45,7 +42,7 @@ const getUSers = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       users,
-      totalPages: Math.ceil(count/limit),
+      totalPages: Math.ceil(count / limit),
       currentPage: page,
     });
   } catch (err) {

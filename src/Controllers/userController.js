@@ -40,7 +40,6 @@ const userLogin = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    console.log('no user');
     res.status(400);
     throw new Error("The email provided is not registered with any account");
   }
@@ -80,7 +79,6 @@ const currentUser = asyncHandler(async (req, res) => {
 
 const getUser = asyncHandler(async (req, res) => {
   const userId = req.query.userId;
-  console.log(userId);
   const user = await User.findById(userId);
   res.status(200).json(user);
 });

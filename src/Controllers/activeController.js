@@ -4,7 +4,6 @@ const Tutor = require("../models/tutor");
 
 const userBlock = asyncHandler(async (req, res) => {
   try {
-    console.log(req.params.id);
     await User.findByIdAndUpdate(req.params.id, {
       $set: {
         isActive: false,
@@ -34,7 +33,6 @@ const userUnBlock = asyncHandler(async (req,res) => {
 
 const tutorBlock = asyncHandler(async (req, res) => {
   try {
-    console.log(req.params.id);
     await Tutor.findByIdAndUpdate(req.params.id, {
       $set: {
         isActive: false,

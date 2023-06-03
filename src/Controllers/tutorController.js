@@ -7,7 +7,6 @@ const { createConnection } = require("../services/tutor.service");
 
 const tutorRegister = asyncHandler(async (req, res) => {
   const { tutorname, email, password } = req.body;
-  console.log({ tutorname, email, password });
   if (!tutorname || !email || !password) {
     res.status(400);
     throw new Error("All fields are mandatory! ");

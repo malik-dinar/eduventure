@@ -27,10 +27,12 @@ const getReport = asyncHandler(async (req,res) => {
     let response=[];
     for(id of result){   
       let data =await getVideoDetails(id.courseId,id.videoId,id.reports);
-      console.log(data);
-      response.push(data);
+      if(data){
+        response.push(data);
+      }
     }
     res.json(response);
+
 });
 
 module.exports = { report, getReport };

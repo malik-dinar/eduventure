@@ -15,6 +15,7 @@ const getVideoDetails = asyncHandler(async (courseId, videoId ,report) => {
     return;            
   }
   const foundObject = course.videos.find((obj) => obj._id === videoId);
+  if(!foundObject) { return null; }
   const title = foundObject.title;
   const s3ObjectUrl = parseUrl(foundObject.url);
   const presigner = new S3RequestPresigner({
@@ -27,7 +28,7 @@ const getVideoDetails = asyncHandler(async (courseId, videoId ,report) => {
   });
   const url = await presigner.presign(new HttpRequest(s3ObjectUrl));
   return {
-    data: formatUrl(url),
+    data: formatUrl(url), 
     courseId:courseId,
     videoId: videoId,
     title: title,

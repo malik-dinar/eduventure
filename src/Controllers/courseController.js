@@ -77,14 +77,15 @@ const trendingCourse = async (req, res) => {
       $sort: { comments: -1 },
     },
     {
-      $limit: 3,
+      $limit: 4,
     },
   ]);
 
   let response = [];
+  const uniqueIds = [...new Set(result.map((element) => element.courseId))];
   await Promise.all(
-    result.map(async (element) => {
-      let id = element.courseId;
+    uniqueIds.map(async (id) => {
+      //let id = element.courseId;
       let add = await Course.find({ _id: id });
       response.push(add);
     })
@@ -92,13 +93,46 @@ const trendingCourse = async (req, res) => {
   res.json(response);
 };
 
+// const trendingCourse = async (req, res) => {
+//   const result = await Reports.aggregate([
+//     {
+//       $project: {
+//         courseId: 1,
+//         comments: { $size: "$comments" },
+//       },
+//     },
+//     {
+//       $sort: { comments: -1 },
+//     },
+//     {
+//       $limit: 4,
+//     },
+//     {
+//       $lookup: {
+//         from: "courses",
+//         localField: "courseId",
+//         foreignField: "_id",
+//         as: "courseData",
+//       },
+//     },
+//     {
+//       $unwind: "$courseData",
+//     },
+//   ]);
+
+//   const response = result.map((element) => element.courseData);
+//   res.json(response);
+// };
+
+
 const deletCourse = async (req, res) => {
-  const courseId = req.query.courseId;
+  const { courseId } = req.query;
   await Course.findByIdAndUpdate(
     courseId,
     { $set: { isDeleted: true } },
     { new: true }
-  );
+  )
+
   res.status(200).json({ message: "course deleted successfully" });
 };
 

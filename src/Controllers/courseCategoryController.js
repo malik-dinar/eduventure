@@ -80,11 +80,20 @@ const getCourseList = async (req, res) => {
 
 const getAllCourse = async (req, res) => {
   try {
-    const course = await Course.find({isDeleted: {$ne:true}});
+    const { page = 1, limit = 10 } = req.query;
+    const course = await Course.find({ isDeleted: { $ne: true } })
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .exec();
     if (!course) {
       return res.status(404).json({ err: true, message: "No Course Found" });
     }
-    res.json(course);
+    const count = await Course.countDocuments();
+    res.status(200).json({
+      course,
+      totalPages: Math.ceil(count/limit),
+      currentPage: page,
+    });
   } catch (err) {
     console.log(err);
   }
