@@ -2,7 +2,10 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const { comparePassword, createAccessToken } = require("../utils/encrypt.util");
 const User = require("../models/user");
+const Tutor = require("../models/tutor");
 const jwt = require("jsonwebtoken");
+const { createConnection } = require("../services/tutor.service");
+
 
 const userRegister = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -21,6 +24,13 @@ const userRegister = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
   });
+
+  const tutors = await Tutor.find();
+  const userId = user._id.toString()
+  
+  createConnection(tutors,userId);
+
+
   if (user) {
     res.status(201).json({ _id: user.id, email: user.email });
   } else {
@@ -64,7 +74,6 @@ const userLogin = asyncHandler(async (req, res) => {
     email: user.email,
     id: user._id,
   };
-
   const accessToken = createAccessToken(tokenParams);
 
   return res

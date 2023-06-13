@@ -10,7 +10,7 @@ function customCompression(req, res, next) {
             return false;
         }
 
-        // fallback to standard compression
+        // fallback to standard compression 
         return compression.filter(req, res);
     };
 

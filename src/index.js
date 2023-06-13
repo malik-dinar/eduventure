@@ -7,16 +7,16 @@ const bodyParser = require("body-parser");
 
 require("dotenv").config();
 
-const connectDb = require("./Config/dbConnection");
+const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middleware/errorHandler");
 const compression = require("./middleware/compression");
-const authLimiter = require("./Middleware/rate.limiter");
+const authLimiter = require("./middleware/rate.limiter");
 const { initializeSocket } = require("./socket/socket");
 
-const userRoute = require("./Routes/userRoutes");
-const tutorRoute = require("./Routes/tutorRoutes");
-const adminRoute = require("./Routes/adminRoutes");
-const chatRoute = require("./Routes/chatRoutes");
+const userRoute = require("./routes/userRoutes");
+const tutorRoute = require("./routes/tutorRoutes");
+const adminRoute = require("./routes/adminRoutes");
+const chatRoute = require("./routes/chatRoutes");
 
 connectDb();
 
