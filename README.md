@@ -27,8 +27,14 @@
 To set up the backend codebase for development, follow these steps:
 
 1. Clone the repository.
+```shell
+    git clone https://github.com/malik-dinar/eduventure.git
+```
 2. Navigate to the backend directory.
 3. Install the required dependencies.
+```shell
+    npm install
+```
 4. Set up the necessary environment variables.
 5. Start the backend server.
 6. Connect the backend to the MongoDB database.
