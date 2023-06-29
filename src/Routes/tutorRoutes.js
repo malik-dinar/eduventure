@@ -48,6 +48,7 @@ router.get("/category", getCategory);
 
 router.get("/course/:id", getCourse);
 
+
 router.post(
   "/video",
   (req, res, next) => {
