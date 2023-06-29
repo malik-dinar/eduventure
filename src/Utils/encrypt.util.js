@@ -21,6 +21,7 @@ const comparePassword = async ({ plainPassword, hashedPassword }) => {
 
 /**
 *  
+
 * - `@param {string} user.username`: Specifies the `username` property of the `user` object as a string.
 * - `@param {string} user.email`: Specifies the `email` property of the `user` object as a string.
 * - `@param {string} user.id`: Specifies the `id` property of the `user` object as a string.
